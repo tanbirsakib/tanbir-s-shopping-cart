@@ -25,11 +25,15 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="phone-minus-button" class="btn btn-default">
+                              <i class="fas fa-minus"></i>
+                           </button>
+                           <input id="phone-cart-no" type="text" class="form-control text-center" value="1">
+                           <button id="phone-plus-button" class="btn btn-default">
+                              <i class="fas fa-plus"></i>
+                           </button>
                         </div>
-                        <h5>$1219</h5>
+                        <h5>$<span id="phone-cart">1219</span> </h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -43,12 +47,16 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="case-minus-button" class="btn btn-default">
+                              <i class="fas fa-minus"></i>
+                           </button>
+                           <input id="case-cart-no" type="text" class="form-control text-center" value="1">
+                           <button id="case-plus-button" class="btn btn-default">
+                              <i class="fas fa-plus"></i>
+                           </button>
 
                         </div>
-                        <h5>$59</h5>
+                        <h5>$ <span id="case-cart">59</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -64,9 +72,9 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="sub-total">00</span></h5>
                         <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="total-amount">00</span></h5>
                      </div>
                   </div>
                </div>
@@ -78,5 +86,79 @@
       </div>
    </section>
 </body>
+<script>
+   //Phone plus Button Event handler
+   const phonePlusButtonCheck = document.getElementById("phone-plus-button");
+   phonePlusButtonCheck.addEventListener("click", function(){
+      phoneTextUpdate("phone-cart-no",1);
+      const phoneCart = phoneCartUpdate("phone-cart", 1219);
+
+      const caseCart = document.getElementById("case-cart").innerText;
+      const caseCartNumber = parseFloat(caseCart);
+      document.getElementById("sub-total").innerText = phoneCaseUpdate(phoneCart,caseCartNumber);
+
+      finalAmountCheck("total-amount", "sub-total");
+   })
+   //Case plus Button Event handler
+   const casePlusButtonCheck = document.getElementById("case-plus-button");
+   casePlusButtonCheck.addEventListener("click", function(){
+      phoneTextUpdate("case-cart-no",1);
+      const caseCart = phoneCartUpdate("case-cart", 59);
+      
+      const phoneCart = document.getElementById("phone-cart").innerText;
+      const phoneCartNumber = parseFloat(phoneCart);
+      document.getElementById("sub-total").innerText = phoneCaseUpdate(caseCart,phoneCartNumber);
+
+      finalAmountCheck("total-amount", "sub-total");
+
+   })
+   //Phone minus Button Event handler
+   const phoneMinusButtonCheck = document.getElementById("phone-minus-button");
+   phoneMinusButtonCheck.addEventListener("click", function(){
+      phoneTextUpdate("phone-cart-no",-1);
+      const phoneCart = phoneCartUpdate("phone-cart", -1219);
+
+      const caseCart = document.getElementById("case-cart").innerText;
+      const caseCartNumber = parseFloat(caseCart);
+      document.getElementById("sub-total").innerText = phoneCaseUpdate(phoneCart,caseCartNumber);
+
+      finalAmountCheck("total-amount", "sub-total");
+   })
+   //Case Minus Button Event handler
+   const caseMinusButtonCheck = document.getElementById("case-minus-button");
+   caseMinusButtonCheck.addEventListener("click", function(){
+      phoneTextUpdate("case-cart-no",-1);
+      const caseCart = phoneCartUpdate("case-cart", -59);
+
+      const phoneCart = document.getElementById("phone-cart").innerText;
+      const phoneCartNumber = parseFloat(phoneCart);
+      document.getElementById("sub-total").innerText = phoneCaseUpdate(caseCart,phoneCartNumber);
+
+      finalAmountCheck("total-amount", "sub-total");
+   })
+   function phoneTextUpdate(id, givenNumber){
+      const getNumber = document.getElementById(id).value;
+      const getNumberDigit = parseFloat(getNumber);
+      const totalAmount = getNumberDigit + givenNumber;
+      document.getElementById(id).value = totalAmount;
+      return totalAmount;
+   }
+   function phoneCartUpdate(id, givenNumber){
+      const getNumber = document.getElementById(id).innerText;
+      const getNumberDigit = parseFloat(getNumber);
+      const totalAmount = getNumberDigit + givenNumber;
+      document.getElementById(id).innerText = totalAmount;
+      return totalAmount;
+   }
+   function phoneCaseUpdate(firstNumber, secondNumber){
+      const totalAmount = firstNumber + secondNumber;
+      return totalAmount;
+
+   }
+   function finalAmountCheck(firstId, secondId){
+       document.getElementById(firstId).innerText = document.getElementById(secondId).innerText;
+      
+   }
+</script>
 
 </html>
